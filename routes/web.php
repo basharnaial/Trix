@@ -21,3 +21,7 @@ Route::get('/join_game', function () {
     return view('client');
 });
 
+
+Route::get('/login', function () {
+    return view('login');
+});
