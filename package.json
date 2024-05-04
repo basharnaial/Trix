@@ -25,6 +25,7 @@
     "@vitejs/plugin-vue": "^5.0.4",
     "express": "^4.19.2",
     "socket.io": "^4.7.5",
-    "vue": "^3.4.26"
+    "vue": "^3.4.26",
+    "vue-router": "^4.3.2"
   }
 }

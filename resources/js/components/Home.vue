@@ -11,8 +11,9 @@ onMounted(() => {
     {{ count }}
 
     <button @click="count++">
-        Add 3214124
+        Add
     </button>
+    <br>
     <router-link to="/login">تسجيل الدخول</router-link>
 
 </template>

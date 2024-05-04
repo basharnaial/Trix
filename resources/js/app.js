@@ -1,10 +1,7 @@
-import { createApp } from 'vue'
-import Counter from './components/Counter.vue'
-import Login from './components/Login.vue';
+import { createApp } from 'vue';
+import App from './components/App.vue'; // Adjust path if necessary
+import router from './components/router';
 
-const app = createApp()
-
-app.component('counter', Counter);
-app.component('login', Login);
-
-app.mount('#app')
+const app = createApp(App);
+app.use(router);
+app.mount('#app');
