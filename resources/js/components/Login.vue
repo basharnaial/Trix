@@ -1,14 +1,19 @@
-<template>
-    <div>
-        <h1>Login Page</h1>
-        <!-- أي محتوى إضافي لصفحة تسجيل الدخول -->
-    </div>
-</template>
-
 <script setup>
-import { onMounted } from 'vue';
+import {onMounted, ref} from 'vue';
+const count = ref(0)
 
 onMounted(() => {
-    console.log('Login component is mounted');
+    console.log('Counter component is mounted');
 });
 </script>
+
+<template>
+    {{ count }}
+
+    <button @click="count++">
+        Add
+    </button>
+    <br>
+    <router-link to="/login">تسجيل الدخول</router-link>
+
+</template>
