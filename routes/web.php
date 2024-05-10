@@ -18,6 +18,11 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome')->middleware('auth');;
 
+Route::get('/join_game', function () {
+    return view('client');
+});
+
+
 //Route::get('/dashboard', function () {
 //    return view('dashboard');
 //})->middleware(['auth', 'verified'])->name('dashboard');

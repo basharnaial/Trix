@@ -65,9 +65,10 @@ const allCards = [
     { value: 'K', shape: 'Spades' },
 ];
 
-var deck = Array.from(allCards);
+var games = {};
 
-function pick13Cards() {
+
+function pick13Cards(deck) {
     var pickedCards = [];
     if (deck.length == 0) {
         return pickedCards;
@@ -84,25 +85,59 @@ function pick13Cards() {
 
 io.on('connection', (socket) => {
 
-    var hand = pick13Cards();
-    if (hand.length == 0) {
-        socket.disconnect(true);
-    }
-    else console.log('A user connected');
 
-    io.to(socket.id).emit("get_hand", { hand: hand });
+    console.log(socket.id, ' connected');
+
+
+    socket.on('join_game', (data) => {
+        var game_id = data.game_id;
+        if (games[game_id] == null) {
+            games[game_id] = {};
+            games[game_id].deck = Array.from(allCards);
+            games[game_id].players = [];
+            games[game_id].players.push(socket.id);
+            games[game_id].table = [];
+            var hand = pick13Cards(games[game_id].deck);
+            socket.join(game_id);
+            socket.game_id = game_id;
+            socket.hand = hand;
+            io.to(game_id).emit("player_joined", { player: socket.id });
+            io.to(socket.id).emit("hand", { hand: hand });
+        }
+        else {
+            if (games[game_id].players.length < 4) {
+                games[game_id].players.push(socket.id);
+                var hand = pick13Cards(games[game_id].deck);
+                socket.join(game_id);
+                socket.game_id = game_id;
+                socket.hand = hand;
+                io.to(game_id).emit("player_joined", { player: socket.id });
+                io.to(socket.id).emit("hand", { hand: hand });
+            }
+        }
+    });
 
     socket.on('use_card', (data) => {
-       // io.broadcast.emit("card_thrown", data);
-        io.emit("card_thrown", data);
+        var game_id = socket.game_id;
+        if (games[game_id].players.length == 4) {
+            var pleyer_turn = games[game_id].players.indexOf(socket.id) + 1;
+            if (pleyer_turn == games[game_id].table.length + 1) {
+                games[game_id].table.push(data.card);
+                socket.hand = socket.hand.filter(function (el) { return el.value != data.card.value || el.shape != data.card.shape });
+                io.to(socket.id).emit("hand", { hand: socket.hand });
+                io.to(game_id).emit("table", games[game_id].table);
+                if (games[game_id].table.length == 4) {
+                    games[game_id].table = [];
+                }
+            }
+        }
+
     });
 
     socket.on('disconnect', () => {
-        io.sockets.sockets.forEach((socket) => {
-            socket.disconnect(true);
-        });
-        console.log('All users disconnected');
-        deck = Array.from(allCards);
+        delete games[socket.game_id];
+        io.in(socket.game_id).disconnectSockets();
+        console.log(socket.id, ' disconnected');
     });
 });
 
