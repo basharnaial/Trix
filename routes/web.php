@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GameController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,9 +23,7 @@ Route::get('/join_game', function () {
     return view('client');
 });
 
-Route::get('/game', function () {
-    return view('game');
-})->name('game')->middleware('auth');;
+Route::get('/game', [GameController::class, 'index'])->name('game')->middleware('auth');
 
 
 //Route::get('/dashboard', function () {

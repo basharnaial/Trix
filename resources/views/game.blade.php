@@ -104,9 +104,9 @@
                             <span>الألعاب</span>
                         </a>
                     </li>
-                    <li>
+                    <li >
                         <a href="#">
-                            <span>المسابقات</span>
+                            <span class="hide">المسابقات</span>
                         </a>
                     </li>
                 </ul>
@@ -115,12 +115,12 @@
                 <div class="btn-group settings">
                     <a data-toggle="dropdown" href="#">
                         <img src="{{ asset('img/avatar-normal.png') }}" alt="Avatar">
-                        <span class="profile-name">Bashar</span>
+                        <span class="profile-name">{{ $user->name }}</span>
                         <i class="fa fa-caret-down fa-lg"></i>
                     </a>
                     <ul class="dropdown-menu flush-right">
                         <li>
-                            <a data-profile-id="3723606" href="#">ملفي الشخصي</a>
+                            <a data-profile-id="3723606" href="http://localhost:8000/profile">ملفي الشخصي</a>
                         </li>
                         <li class="divider"></li>
                         <li>
@@ -140,7 +140,15 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a class="red-action" href="#">تسجيل الخروج</a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <x-dropdown-link :href="route('logout')"
+                                                 onclick="event.preventDefault();
+                                                this.closest('form').submit();" class="red-action">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
                         </li>
                     </ul>
                 </div>
@@ -268,7 +276,9 @@
 
                 <a href="#" data-router="games">تركس</a>
                 <div id="inputDiv">
+
                     <input type="text" id="input">
+
                     <button onclick=joinGame()>Join Game</button>
                 </div>
 
@@ -341,7 +351,8 @@
 
   <span class="name  basha">
 
-    Bashar
+    {{ $user->name }}
+
   </span>
 
 
