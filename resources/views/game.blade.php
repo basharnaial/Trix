@@ -267,6 +267,11 @@
         <div class="page-header game-header" id="game-header"><h1 class="page-header-title">
 
                 <a href="#" data-router="games">تركس</a>
+                <div id="inputDiv">
+                    <input type="text" id="input">
+                    <button onclick=joinGame()>Join Game</button>
+                </div>
+
                 <br>
                 <span class="small-info">
       رقم الغرفة
@@ -313,6 +318,9 @@
                     <div class="wide" id="game-table">
                         <div id="game-table-border" class="default-table">
                             <div id="game-canvas">
+                                <div id="myHand" style="display: flex;">
+                                </div>
+
                                 <div></div>
                                 <div></div>
                                 <div></div>
@@ -360,6 +368,7 @@
                                             <div class="score" rel="tooltip" title="مجموع نقاط الجولة">0</div>
                                         </div>
 
+
                                         <div class="timer-background">
                                             <div id="timer-c3337" class="timer polartimer" style="height: 90px;">
                                                 <svg height="90" version="1.1" width="90"
@@ -383,84 +392,7 @@
 
                                         <div class="hand card-stack fanned cropped rotate-bottom ui-droppable"
                                              aria-disabled="false">
-                                            <div id="card-c5051" class=" card ">
-
-
-                                                <div class="face"></div>
-                                                <div class="back"></div>
-
-                                            </div>
-                                            <div id="card-c5052" class=" card ">
-
-
-                                                <div class="face"></div>
-                                                <div class="back"></div>
-
-                                            </div>
-                                            <div id="card-c5053" class=" card ">
-
-
-                                                <div class="face"></div>
-                                                <div class="back"></div>
-
-                                            </div>
-                                            <div id="card-c5054" class=" card ">
-
-
-                                                <div class="face"></div>
-                                                <div class="back"></div>
-
-                                            </div>
-                                            <div id="card-c5055" class=" card ">
-
-
-                                                <div class="face"></div>
-                                                <div class="back"></div>
-
-                                            </div>
-                                            <div id="card-c5056" class=" card ">
-
-
-                                                <div class="face"></div>
-                                                <div class="back"></div>
-
-                                            </div>
-                                            <div id="card-c5057" class=" card ">
-
-
-                                                <div class="face"></div>
-                                                <div class="back"></div>
-
-                                            </div>
-                                            <div id="card-c5058" class=" card ">
-
-
-                                                <div class="face"></div>
-                                                <div class="back"></div>
-
-                                            </div>
-                                            <div id="card-c5059" class=" card ">
-
-
-                                                <div class="face"></div>
-                                                <div class="back"></div>
-
-                                            </div>
-                                            <div id="card-c5060" class=" card ">
-
-
-                                                <div class="face"></div>
-                                                <div class="back"></div>
-
-                                            </div>
-                                            <div id="card-c5061" class=" card ">
-
-
-                                                <div class="face"></div>
-                                                <div class="back"></div>
-
-                                            </div>
-                                            <div id="card-c5062" class=" card ">
+                                            <div id="card-c5051" class=" card  hide">
 
 
                                                 <div class="face"></div>
@@ -974,7 +906,7 @@
                                     <div id="ordering-stack-container"></div>
                                 </div>
                                 <div id="table-stack" class="ui-droppable" aria-disabled="false">
-                                    <div id="card-c5063" class="card face-up club-8"
+                                    <div id="card-c5063" class="card face-up club-8 hide"
                                          style="opacity: 1; margin: 0px; left: 101.5px; top: -36px;">
 
 
@@ -982,7 +914,7 @@
                                         <div class="back"></div>
 
                                     </div>
-                                    <div id="card-c5076" class="card face-up club-4"
+                                    <div id="card-c5076" class="card face-up club-4 hide"
                                          style="opacity: 1; margin: 0px; left: -26.5px; top: -139px;">
 
 
@@ -990,22 +922,17 @@
                                         <div class="back"></div>
 
                                     </div>
-                                    <div id="card-c5089" class="card face-up club-J"
+
+                                    <div id="card-c5089" class="card face-up club-J "
                                          style="opacity: 1; margin: 0px; left: -154.5px; top: -36px;">
+                                <div id="table" style="display: flex;">
+                                </div>
 
-
-                                        <div class="face"></div>
                                         <div class="back"></div>
+                            {{-- <div class="face"></div>--}}
 
                                     </div>
-                                    <div id="card-c5050" class="card face-up club-9"
-                                         style="opacity: 1; margin: 0px; left: -26.5px; top: 67px;">
 
-
-                                        <div class="face"></div>
-                                        <div class="back"></div>
-
-                                    </div>
                                 </div>
                                 <div class="card-stack vertical face-up ui-droppable" aria-disabled="false"
                                      style="top: -80px; left: -185px; display: none;"></div>
@@ -1277,6 +1204,125 @@
 
 </div>
 <script src="{{ asset('js/application.js') }}"></script>
+
+<script>
+    myCards = [];
+    const shapes = {
+        'Hearts': '♥',
+        'Diamonds': '♦',
+        'Clubs': '♣',
+        'Spades': '♠'
+    };
+
+    function showCards() {
+        const myHand = document.getElementById('myHand');
+        myHand.innerHTML = '';
+        if (myCards.length == 0) {
+            console.log("Empty hand");
+            return;
+        }
+        for (let i = 0; i < myCards.length; i++) {
+            let cardString = '';
+            cardString += ' _______\n';
+            cardString += `|       |\n`;
+            cardString += `| ${myCards[i].value.padEnd(2)}    |\n`;
+            cardString += `|       |\n`;
+            cardString += `|   ${shapes[myCards[i].shape]}   |\n`;
+            cardString += `|       |\n`;
+            cardString += `|    ${myCards[i].value.padStart(2)} |\n`;
+            cardString += `|_______|\n`;
+
+            const cardElement = document.createElement('pre');
+            cardElement.textContent = cardString;
+
+            const button = document.createElement('button');
+            button.textContent = 'Use';
+            button.addEventListener('click', function() {
+                socket.emit('use_card', {
+                    card: myCards[i]
+                });
+            });
+
+            const div = document.createElement('div');
+            div.style.display = 'flex';
+            div.style.flexDirection = 'column';
+            div.style.alignItems = 'center';
+            div.style.color = '#41A39C';
+
+            div.appendChild(cardElement);
+            div.appendChild(button);
+
+            myHand.appendChild(div);
+        }
+
+    }
+
+    function showCard(card) {
+        var table = document.getElementById('table');
+
+        let cardString = '';
+        cardString += ' _______\n';
+        cardString += `|       |\n`;
+        cardString += `| ${card.value.padEnd(2)}    |\n`;
+        cardString += `|       |\n`;
+        cardString += `|   ${shapes[card.shape]}   |\n`;
+        cardString += `|       |\n`;
+        cardString += `|    ${card.value.padStart(2)} |\n`;
+        cardString += `|_______|\n`;
+
+        const cardElement = document.createElement('pre');
+        // cardElement.style.background = 'white';
+
+        cardElement.textContent = cardString;
+
+        const div = document.createElement('div');
+        div.appendChild(cardElement);
+
+        table.appendChild(div);
+    }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+
+<script>
+    const socket = io('http://localhost:3000');
+
+    socket.on('connect', () => {
+        console.log('Connected to the server');
+    });
+
+    function joinGame() {
+        var input = document.getElementById('input');
+        var game_id = input.value;
+        var inputDiv = document.getElementById('inputDiv');
+        inputDiv.innerHTML = '';
+        socket.emit('join_game', {
+            game_id: game_id
+        });
+    }
+
+    socket.on('hand', function(data) {
+        console.log('Hand received.');
+        myCards = data.hand;
+        showCards();
+    });
+
+    socket.on('table', function(table) {
+        var table_ = document.getElementById('table');
+        table_.innerHTML = '';
+        table.forEach(card => {
+            showCard(card);
+        });
+    });
+
+    socket.on('disconnect', () => {
+        const myHand = document.getElementById('myHand');
+        var table = document.getElementById('table');
+        table.remove();
+        myHand.innerHTML = 'You have been disconnected automatically because someone left the game.';
+        console.log('Disconnected from the server');
+    });
+</script>
 
 
 </body>

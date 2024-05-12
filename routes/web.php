@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-})->name('welcome')->middleware('auth');;
+})->name('welcome')->middleware('auth');
 
 Route::get('/join_game', function () {
     return view('client');
@@ -24,7 +24,7 @@ Route::get('/join_game', function () {
 
 Route::get('/game', function () {
     return view('game');
-});
+})->name('game')->middleware('auth');;
 
 
 //Route::get('/dashboard', function () {
