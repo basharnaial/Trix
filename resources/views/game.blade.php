@@ -364,7 +364,7 @@
 
 
                     <div id="inputDiv" style="margin: 37%;">
-                        <input type="text" id="input" style="    background: #ffc52d;
+                        <input type="text" id="input" placeholder="يرجى إدخال رقم الغرفة" style="    background: #ffc52d;
     border-radius: 14px;
     width: 306px;
     height: 46px;
