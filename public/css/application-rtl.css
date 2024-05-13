@@ -18081,5 +18081,14 @@ p.offline-msg-content {
     cursor: pointer;
     font-size: 40px
 }
+div#myHand {
+    margin-top: 85%;
+    flex-flow: wrap;
+}
 
+
+div#table {
+    margin: -244px;
+    padding-top: 190px;
+}
 /*!= end(no-rtl) */
