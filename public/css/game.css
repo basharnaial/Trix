@@ -2589,3 +2589,112 @@ body.home.rules .modal-wrapper .modal .modal-body .game-list a:hover strong {
 .promotions-lb .modal-body .content ul li {
     word-wrap: break-word
 }
+
+.sides {
+    animation: 0.7s curtain cubic-bezier(.86,0,.07,1) 0.4s both;
+
+    display: grid;
+    grid-template-columns: 50vw 50vw;
+}
+
+
+@keyframes curtain {
+    0% {
+        grid-gap: 100vw;
+    }
+
+    100% {
+        grid-gap: 0;
+    }
+}
+
+
+
+
+
+
+
+.intro {
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.sides {
+    position: relative;
+}
+
+.side {
+    display: flex;
+    align-items: center;
+    font-size: 5vw;
+}
+
+.monkey {
+    background-color: #8957E5;
+    color: #fff;
+}
+
+.robot {
+    background-color: #41A39C;
+    color: #ffffff;
+    flex-direction: column-reverse;
+}
+
+.name {
+    margin: 0.3em;
+}
+
+.emoji {
+    font-size: 2em;
+}
+
+.versus {
+    position: absolute;
+    width: 8vw;
+    height: 8vw;
+    background: #ffffff;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.4vw;
+    color: #123456;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #FFC52D #8CC84B #FF2D20 #8957E5;
+    transform: rotate(-45deg);
+}
+
+.versus span {
+    transform: rotate(44deg);
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.logoIntro {
+    animation: blink 1s;
+    animation-iteration-count: infinite;
+}
+
+#intro {
+    transition: opacity 0.5s ease-out;
+    opacity: 1;
+}
+
+
