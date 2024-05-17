@@ -362,9 +362,10 @@
 
                 <div class="partnering-game tarneeb" id="game-body">
 
-
-                    <div id="inputDiv" style="margin: 37%;">
-                        <input type="text" id="input" placeholder="يرجى إدخال رقم الغرفةph" style="    background: #ffc52d;
+                    <img class="logoIntro blink" style="margin-right: 43%;" src="{{ asset('img/logo.png') }}">
+                    <div id="inputDiv" style="    margin-right: 35%;
+    margin-top: 20%;">
+                        <input type="text" id="input" placeholder="يرجى إدخال رقم الغرفة" style="    background: #ffc52d;
     border-radius: 14px;
     width: 306px;
     height: 46px;
@@ -833,14 +834,14 @@
 
   <span class="name  ">
 
-    Prof, MohamedZayed
+    Elon Musk
 
   </span>
 
 
                                             <a class="avatar   ">
 
-                                                <img src="{{ asset('img/CJfqziR2_400x400.jpg') }}" alt="M7lzM">
+                                                <img src="https://hips.hearstapps.com/hmg-prod/images/gettyimages-1229892983-square.jpg" alt="M7lzM">
                                                 <div class="shine"></div>
                                             </a>
 
@@ -1370,8 +1371,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
 
 <script>
-    const socket = io('http://192.168.141.236:3000');
-
+    const socket = io('http://localhost:3000');
+    // TO RUN AS SERVER PUT THIS IP
+    // const socket = io('http://192.168.141.236:3000');
+    // THEN php .\artisan serve --host 0.0.0.0 --port 8000
+    // node server.cjs
     socket.on('connect', () => {
         console.log('Connected to the server');
     });
@@ -1392,7 +1396,7 @@
         inputDiv.innerHTML = 'رقم الغرفة: ' + game_id;
 
         var inputDiv2 = document.getElementById('exitS');
-        inputDiv2.innerHTML = '<button style="background-color:red;color:white;" onclick="leaveGame()">تسجيل الخروج</button>';
+        inputDiv2.innerHTML = '<button style="background-color:red;color:white;" onclick="leaveGame()">المغادرة من اللعبة</button>';
 
     }
 
@@ -1424,15 +1428,12 @@
             <button style="background: #41a39c; color: white; margin-right: 50%; text-shadow: -1px 2px 5px black;" onclick="joinGame()">Join Game</button>
         `;
 
-            // Optionally, emit a signal to the server that the player has left the game
-            // Reload the page after 2 seconds
             setTimeout(function () {
                 location.reload();
             }, 2000);
         }
     }
 
-    // Additionally, make sure to handle the 'leave_game' event in your server code
 
     socket.on('hand', function (data) {
         console.log('Hand received.');

@@ -123,6 +123,8 @@ io.on('connection', (socket) => {
             socket.hand = hand;
             // Notify all players in the game of the new player joining.
             io.to(game_id).emit("player_joined", { player: socket.id });
+            console.log('new player create a game ' + game_id);
+
             // Send the initial hand of cards to the new player.
             io.to(socket.id).emit("hand", { hand: hand });
         }
@@ -135,6 +137,8 @@ io.on('connection', (socket) => {
                 socket.game_id = game_id;
                 socket.hand = hand;
                 io.to(game_id).emit("player_joined", { player: socket.id });
+                console.log('new player joined ' + game_id);
+
                 io.to(socket.id).emit("hand", { hand: hand });
             }
         }
